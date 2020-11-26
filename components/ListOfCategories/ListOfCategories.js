@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Category from '@components/Category/Category';
+import Category, { CategorySkeleton } from '@components/Category/Category';
 import { List, Item } from './styles';
-import { getCategorias } from '@utils/api';
-import { render } from 'react-dom';
+import useCategoriesData from 'hooks/useCategoriesData';
 
 const ListOfCategories = () => {
-  const [categories, setCategories] = useState([]);
+  const { categories, loading } = useCategoriesData();
   const [showFixed, setShowFixed] = useState(false);
-
-  useEffect(() => {
-    getCategorias().then((res) => {
-      setCategories(res);
-    });
-  }, []);
 
   useEffect(() => {
     const onScroll = (e) => {
@@ -27,14 +20,33 @@ const ListOfCategories = () => {
 
   const renderList = (fixed) => {
     return (
-      <List className={fixed ? 'fixed' : ''}>
-        {categories.map((category, index) => {
-          return (
-            <Item key={index}>
-              <Category {...category} />
+      <List fixed={fixed}>
+        {loading ? (
+          <>
+            <Item>
+              <CategorySkeleton />
             </Item>
-          );
-        })}
+            <Item>
+              <CategorySkeleton />
+            </Item>
+            <Item>
+              <CategorySkeleton />
+            </Item>
+            <Item>
+              <CategorySkeleton />
+            </Item>
+          </>
+        ) : (
+          <>
+            {categories.map((category, index) => {
+              return (
+                <Item key={index}>
+                  <Category {...category} />
+                </Item>
+              );
+            })}
+          </>
+        )}
       </List>
     );
   };
