@@ -10,6 +10,10 @@ export const ImgWrapper = styled.div`
   width: 100%;
 `;
 
+export const Article = styled.article`
+  min-height: 200px;
+`;
+
 export const Img = styled.img`
   ${fadeIn()}
   box-shadow: 0 10px 14px rgba(0, 0, 0, 0.2);
