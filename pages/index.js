@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
       <ListOfCategories />
-      <ListOfPhotoCards />
+      <ListOfPhotoCards categoryID={1} />
     </div>
   );
 }

@@ -3,19 +3,20 @@ import PhotoCard from '@components/PhotoCard/PhotoCard';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
-const ListOfPhotoCards = () => {
-  const { loading, error, data } = useQuery(gql`
-    query getPhotos {
-      photos {
-        id
-        categoryId
-        src
-        likes
-        userId
-        liked
-      }
+const getPhotos = gql`
+  query getPhotos($categoryID: ID) {
+    photos(categoryId: $categoryID) {
+      id
+      categoryId
+      src
+      likes
+      userId
+      liked
     }
-  `);
+  }
+`;
+const ListOfPhotoCards = ({ categoryID }) => {
+  const { loading, error, data } = useQuery(getPhotos, { variables: { categoryID } });
 
   useEffect(() => {
     console.log(loading, error, data);
