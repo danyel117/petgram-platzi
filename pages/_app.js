@@ -1,8 +1,8 @@
+import React,{useState} from 'react'
 import { GlobalStyle } from './GlobalStyles';
 import Logo from '@components/Logo/Logo';
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
-
 const cache = new InMemoryCache();
 
 const link = new HttpLink({

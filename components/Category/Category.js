@@ -5,10 +5,10 @@ import { ContainerCategorySkeleton, CategoryImage, CategoryTitle } from './style
 
 const DEFAULT_IMAGE = 'https://i.imgur.com/dJa0Hpl.jpg';
 
-const Category = ({ cover = DEFAULT_IMAGE, path = '', emoji = '?' }) => {
+const Category = ({ cover = DEFAULT_IMAGE, id = '', emoji = '?' }) => {
   return (
     <div>
-      <Link href={path}>
+      <Link href={`/photos/${id.toString()}`}>
         <Anchor>
           <Image src={cover} />
           {emoji}
