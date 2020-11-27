@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import PhotoCard from '@components/PhotoCard/PhotoCard';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-const query = gql`
+const GET_SINGLE_PHOTO = gql`
   query getSinglePhoto($id: ID!) {
     photo(id: $id) {
       id
@@ -20,9 +20,10 @@ const PhotoDetail = () => {
   const {
     query: { id },
   } = useRouter();
-  const { loading, error, data } = useQuery(query, { variables: { id } });
+  const { loading, error, data } = useQuery(GET_SINGLE_PHOTO, { variables: { id } });
 
   if (loading) return 'Loading...';
+  if (error) return 'Error...';
   return <PhotoCard {...data.photo} />;
 };
 
