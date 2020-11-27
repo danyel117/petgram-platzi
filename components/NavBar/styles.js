@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-
+import { fadeIn } from 'styles/animation';
 
 export const Nav=styled.nav`
     align-items:center;
@@ -19,11 +19,22 @@ export const Nav=styled.nav`
 `
 
 export const A = styled.a`
-    align-items:center;
-    color:#888;
-    display:inline-flex;
-    height:100%;
-    justify-content:center;
-    text-decoration:none;
-    width:100%
-`
+  align-items: center;
+  color: #888;
+  display: inline-flex;
+  height: 100%;
+  justify-content: center;
+  text-decoration: none;
+  width: 100%;
+  &.selected {
+    color: #000;
+    &:after {
+    ${fadeIn({time:'0.5s'})}
+      content: '·';
+      position: absolute;
+      bottom: 0;
+      font-size: 34px;
+      line-height: 20px;
+    }
+  }
+`;
