@@ -5,7 +5,7 @@ const ListOfPhotoCards = () => {
   return (
     <ul>
       {[1, 2, 3].map((id) => {
-        return <PhotoCard key={id} />;
+        return <PhotoCard key={id} id={id} />;
       })}
     </ul>
   );
