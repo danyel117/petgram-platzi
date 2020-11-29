@@ -1,11 +1,12 @@
 import React from 'react';
-
+import PrivateRoute from '@components/PrivateRoute'
 const Favoritos = () => {
-    return ( 
-        <div>
-            <p>Favoritos</p>
-        </div>
-     );
+    
+    return (
+        <PrivateRoute>
+            <p>Favs</p>
+        </PrivateRoute>
+    );
 }
  
 export default Favoritos;

@@ -4,6 +4,7 @@ import Logo from '@components/Logo/Logo';
 import NavBar from '@components/NavBar/NavBar'
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
+import {AuthContext} from 'context/auth'
 const cache = new InMemoryCache();
 
 const link = new HttpLink({
@@ -16,13 +17,16 @@ const client = new ApolloClient({
 });
 
 function MyApp({ Component, pageProps }) {
+  const [authTokens,setAuthTokens] = useState(true)
   return (
-    <ApolloProvider client={client}>
-      <GlobalStyle />
-      <Logo />
-      <Component {...pageProps} />
-      <NavBar/>
-    </ApolloProvider>
+    <AuthContext.Provider value={{ authTokens, setAuthTokens }}>
+      <ApolloProvider client={client}>
+        <GlobalStyle />
+        <Logo />
+        <Component {...pageProps} />
+        <NavBar />
+      </ApolloProvider>
+    </AuthContext.Provider>
   );
 }
 
