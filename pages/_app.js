@@ -17,9 +17,20 @@ const client = new ApolloClient({
 });
 
 function MyApp({ Component, pageProps }) {
-  const [authTokens,setAuthTokens] = useState(false)
+  const [authTokens,setAuthTokens] = useState(()=>{
+    try{
+      return localStorage.getItem("token")
+    }
+    catch (e){
+      return false
+    }
+  })
+  const setTokens=(token)=>{
+    setAuthTokens(token)
+    localStorage.setItem("token",token)
+  }
   return (
-    <AuthContext.Provider value={{ authTokens, setAuthTokens }}>
+    <AuthContext.Provider value={{ authTokens, setAuthTokens:setTokens }}>
       <ApolloProvider client={client}>
         <GlobalStyle />
         <Logo />

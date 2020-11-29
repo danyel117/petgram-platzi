@@ -16,13 +16,17 @@ const Register = () => {
     const register = (email,password)=>{
       mutation({
         variables: {
-          input: { email:email.value,password:password.value },
+          input: { email: email.value, password: password.value },
         },
-      }).then(data=>{
-        console.log(data);
-      }).catch(e=>{
-        console.error(e);
-      });
+      })
+        .then(({ data }) => {
+          const { signup } = data;
+          console.log(signup);
+          setAuthTokens(signup)
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     }
 
     const errorMessage=mutationError && "Error en el registro" 
