@@ -6,7 +6,6 @@ import {MdHome,MdFavoriteBorder, MdPersonOutline} from 'react-icons/md'
 const SIZE='32px'
 const NavBar = () => {
       const router = useRouter();
-      console.log(router);
     return (
       <Nav>
         <Link href={'/'}>

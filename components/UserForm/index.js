@@ -1,23 +1,26 @@
 import React from 'react';
 import useInputValue from 'hooks/useInputValue';
-import { Form, Input, Button, Title } from './styles';
+import { Form, Input, Button, Title,Error } from './styles';
 
-const Login = ({onSubmit, title}) => {
+const Login = ({onSubmit, title, error, disabled}) => {
   const email = useInputValue('');
   const password = useInputValue('');
   const handleSubmit = (e)=>{
     e.preventDefault()
-    onSubmit(email.value,password.value)
+    onSubmit(email,password)
   }
   return (
-      <>
+    <>
       <Title>{title}</Title>
-    <Form onSubmit={handleSubmit}>
-      <Input placeholder='Email' required {...email} />
-      <Input placeholder='Password' type='password' required {...password} />
-      <Button type='submit'>{title}</Button>
-    </Form>
-      </>
+      <Form disabled={disabled} onSubmit={handleSubmit}>
+        <Input disabled={disabled} autoComplete='off' placeholder='Email' required {...email} />
+        <Input disabled={disabled} autoComplete='off' placeholder='Password' type='password' required {...password} />
+        <Button disabled={disabled} type='submit'>
+          {title}
+        </Button>
+      </Form>
+      {error && <Error>{error}</Error>}
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAuth } from 'context/auth';
 import UserForm from 'components/UserForm'
 import { useMutation } from '@apollo/react-hooks';
@@ -12,16 +12,25 @@ const REGISTER = gql`
 
 const Register = () => {
     const { setAuthTokens } = useAuth();
-    const [mutation, { loading: mutationLoading, error: mutationError }] = useMutation(REGISTER);
+    const [mutation, {loading: mutationLoading, error: mutationError }] = useMutation(REGISTER);
     const register = (email,password)=>{
       mutation({
         variables: {
-          input: { email,password },
+          input: { email:email.value,password:password.value },
         },
-      }).then(setAuthTokens(true));
+      }).then(data=>{
+        console.log(data);
+      }).catch(e=>{
+        console.error(e);
+      });
     }
+
+    const errorMessage=mutationError && "Error en el registro" 
+
     return (
-      <UserForm onSubmit={register} title="Registrarse"/>
+      <>
+      <UserForm onSubmit={register} title="Registrarse" error={errorMessage} disabled={mutationLoading}/>
+      </>
     );
 }
  
