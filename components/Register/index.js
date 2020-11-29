@@ -2,15 +2,13 @@ import React from 'react';
 import { useAuth } from 'context/auth';
 import UserForm from 'components/UserForm'
 
-const Login = () => {
+const Register = () => {
     const { setAuthTokens } = useAuth();
-    const login = (e)=>{
-        e.preventDefault()
-        setAuthTokens(true)
+    const register = (e)=>{
     }
     return (
-      <UserForm onSubmit={login} title="Iniciar Sesión"/>
+      <UserForm onSubmit={register} title="Registrarse"/>
     );
 }
  
-export default Login;
+export default Register;
