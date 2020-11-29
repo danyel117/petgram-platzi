@@ -2,7 +2,7 @@ import React from 'react';
 import useInputValue from 'hooks/useInputValue';
 import { Form, Input, Button, Title,Error } from './styles';
 
-const Login = ({onSubmit, title, error, disabled}) => {
+const UserForm = ({onSubmit, title, error, disabled}) => {
   const email = useInputValue('');
   const password = useInputValue('');
   const handleSubmit = (e)=>{
@@ -24,4 +24,4 @@ const Login = ({onSubmit, title, error, disabled}) => {
   );
 };
 
-export default Login;
+export default UserForm;

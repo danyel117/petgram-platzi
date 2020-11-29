@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAuth } from 'context/auth';
 import UserForm from 'components/UserForm'
 import { useMutation } from '@apollo/react-hooks';
