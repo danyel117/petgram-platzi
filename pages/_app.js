@@ -1,11 +1,12 @@
 import React,{useState} from 'react'
-import { GlobalStyle } from './GlobalStyles';
+import { GlobalStyle } from '../styles/GlobalStyles';
 import Logo from '@components/Logo/Logo';
 import NavBar from '@components/NavBar/NavBar'
 import { ApolloClient, InMemoryCache, ApolloLink, from, HttpLink } from '@apollo/client';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
+import Head from 'next/head';
 import {AuthContext} from 'context/auth'
 
 const authMiddleware = new ApolloLink((operation, forward) => {
@@ -50,14 +51,22 @@ function MyApp({ Component, pageProps }) {
     localStorage.setItem("token",token)
   }
   return (
-    <AuthContext.Provider value={{ authTokens, setAuthTokens:setTokens }}>
-      <ApolloProvider client={client}>
-        <GlobalStyle />
-        <Logo />
-        <Component {...pageProps} />
-        <NavBar />
-      </ApolloProvider>
-    </AuthContext.Provider>
+    <>
+      <Head>
+        <meta
+          name='viewport'
+          content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
+        />
+      </Head>
+      <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+        <ApolloProvider client={client}>
+          <GlobalStyle />
+          <Logo />
+          <Component {...pageProps} />
+          <NavBar />
+        </ApolloProvider>
+      </AuthContext.Provider>
+    </>
   );
 }
 
