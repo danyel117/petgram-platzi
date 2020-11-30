@@ -1,6 +1,7 @@
 {
-  "name": "next-pwa",
-  "short_name": "next-pwa",
+  "name": "Petgram 🐶",
+  "short_name": "Petgram",
+  "description": "En Petgram puedes encontrar fotos de diferentes mascotas",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#FFFFFF",
