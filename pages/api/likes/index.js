@@ -11,7 +11,6 @@ const ToggleLike = async (req,res) =>{
             if(!decode){
                 return res.status(401).json({status:"error",error:"No autorizado"})
             }
-            console.log(decode)
             const usuario = await prisma.user.findUnique({
                 where: {
                 email: decode.email,
