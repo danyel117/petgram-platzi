@@ -58,3 +58,17 @@ export const getUser = () => {
   const headers = getHeaders(token);
   return makeGet(url, { headers });
 };
+
+export const toggleLike = (data) => {
+  let url = urlBase + '/likes/';
+  const token = JSON.parse(localStorage.getItem('token'));
+  const headers = getHeaders(token);
+  return makeJSONPost(url, data, { headers });
+};
+
+export const getPosts = () => {
+  const url = urlBase + '/posts/';
+  const token = JSON.parse(localStorage.getItem('token'));
+  const headers = getHeaders(token);
+  return makeGet(url, { headers });
+};

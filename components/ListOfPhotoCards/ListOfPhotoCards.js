@@ -1,30 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import PhotoCard from '@components/PhotoCard/PhotoCard';
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
-
-const GET_PHOTOS = gql`
-  query getPhotos($categoryID: ID) {
-    photos(categoryId: $categoryID) {
-      id
-      categoryId
-      src
-      likes
-      userId
-      liked
-    }
-  }
-`;
+import {getPosts} from 'utils/api'
 const ListOfPhotoCards = ({ categoryID }) => {
-  const { loading, error, data } = useQuery(GET_PHOTOS, { variables: { categoryID } });
-
-  if (loading) return 'Loading...';
-  if (error) return 'Error...';
+  const [photos,setPhotos] = useState([])
+  const [likes,setLikes] = useState([])
+  const [user,setUser] = useState([])
+  useEffect(()=>{
+    const fetchPosts = async ()=>{
+      await getPosts().then(res=>{
+        console.log(res)
+        setLikes(res.likes)
+        setPhotos(res.posts)
+        setUser(res.usuario)
+      })
+    }
+    fetchPosts()
+  },[])
   return (
     <ul>
-      {data &&
-        data.photos.map((photo) => {
-          return <PhotoCard key={photo.id} {...photo} />;
+      {photos &&
+        photos.map((photo) => {
+          return <PhotoCard key={photo.id} setLikes={setLikes} likes={likes.filter(el=>el.postId===photo.id).length} liked={likes.filter(el=>(el.userId===user.id && el.postId===photo.id)).length>0} {...photo} />;
         })}
     </ul>
   );

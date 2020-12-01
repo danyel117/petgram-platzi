@@ -34,7 +34,6 @@ const ToggleLike = async (req,res) =>{
                     },
                   },
                 });
-                return res.status(200).json({status:"ok",data:"like created"})
             }
             else{
                 await prisma.like.delete({
@@ -42,8 +41,9 @@ const ToggleLike = async (req,res) =>{
                         id:likes[0].id
                     }
                 })
-                return res.status(200).json({status:"ok",data:"like deleted"})
             }
+            const likesU = await prisma.like.findMany()
+            return res.status(200).json(likesU);
     }
 }
 
