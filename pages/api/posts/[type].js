@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 const Posts = async (req, res) => {
   if (req.method === 'GET') {
     const token = req.headers.authorization;
-    const { post } = req.body;
       const {
         query: { type },
       } = req;

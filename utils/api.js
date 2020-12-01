@@ -1,5 +1,5 @@
 
-var dev = 'test'; //local, test, produccion
+var dev = 'local'; //local, test, produccion
 
 var urlBase = '';
 if (dev === 'produccion') {
@@ -64,6 +64,13 @@ export const toggleLike = (data) => {
   const token = JSON.parse(localStorage.getItem('token'));
   const headers = getHeaders(token);
   return makeJSONPost(url, data, { headers });
+};
+
+export const getPhoto = (id) => {
+  let url = urlBase + `/photos/${id}`;
+  const token = JSON.parse(localStorage.getItem('token'));
+  const headers = getHeaders(token);
+  return makeGet(url, { headers });
 };
 
 export const getPosts = (categoryId=null) => {

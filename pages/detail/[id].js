@@ -1,30 +1,29 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { useRouter } from 'next/router';
 import PhotoCard from '@components/PhotoCard/PhotoCard';
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
-const GET_SINGLE_PHOTO = gql`
-  query getSinglePhoto($id: ID!) {
-    photo(id: $id) {
-      id
-      categoryId
-      src
-      likes
-      userId
-      liked
-    }
-  }
-`;
+import {getPhoto} from 'utils/api'
 
 const PhotoDetail = () => {
   const {
     query: { id },
   } = useRouter();
-  const { loading, error, data } = useQuery(GET_SINGLE_PHOTO, { variables: { id } });
+  const [photo,setPhoto] = useState({})
+  const [loading,setLoading] = useState(false)
 
-  if (loading) return 'Loading...';
-  if (error) return 'Error...';
-  return <PhotoCard {...data.photo} />;
+  useEffect(()=>{
+    const fetchPhoto = async ()=>{
+      setLoading(true)
+      if(id){
+        await getPhoto(id).then(res=>{
+          setPhoto(res.posts)
+          setLoading(false)
+        })
+      }
+    }
+    fetchPhoto()
+  },[id])
+
+  return <PhotoCard {...photo} showButton={false} loading={loading} />;
 };
 
 export default PhotoDetail;
