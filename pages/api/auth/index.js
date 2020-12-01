@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+
 const prisma = new PrismaClient();
 const KEY = process.env.JWT_KEY;
 
@@ -21,7 +22,7 @@ const Auth = async (req,res) => {
         })
         if (!user) {
             /* Send error with message */
-            return res.status(400).json({ status: 'error', error: 'User Not Found' });
+            return res.status(400).json({ status: 'error', error: 'Usuario no encontrado' });
         }
         console.log(user)
         await bcrypt.compare(password,user.password).then((isMatch)=>{
@@ -36,19 +37,18 @@ const Auth = async (req,res) => {
                 payload,
                 KEY,
                 {
-                expiresIn: 31556926, // 1 year in seconds
+                expiresIn: '1h'
                 },
                 (err, token) => {
                 /* Send succes with token */
                 return res.status(200).json({
-                    success: true,
-                    token: 'Bearer ' + token,
+                    token: token,
                 });
                 }
             );
             } else {
             /* Send error with message */
-                return res.status(400).json({ status: 'error', error: 'Password incorrect' });
+                return res.status(400).json({ status: 'error', error: 'Contraseña Incorrecta' });
             }
 
         })

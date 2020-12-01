@@ -1,38 +1,27 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { useAuth } from 'context/auth';
 import UserForm from 'components/UserForm';
-import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
-
-const LOGIN = gql`
-  mutation login($input: UserCredentials!) {
-    login(input: $input)
-  }
-`;
+import {fetchToken} from 'utils/api'
 
 const Login = () => {
   const { setAuthTokens } = useAuth();
-  const [mutation, { loading: mutationLoading, error: mutationError }] = useMutation(LOGIN);
-  const login = (email, password) => {
-    mutation({
-      variables: {
-        input: { email: email.value, password: password.value },
-      },
+  const [errorMessage,setErrorMessage] = useState("")
+  const disabled=false
+  const login = async(email,password)=>{
+    const data = { email: email.value, password: password.value };
+    await fetchToken(data).then(res=>{
+      console.log(res,res.status);
+      if(res.status==="error"){
+        setErrorMessage(res.error);
+      }
+      else{
+        setAuthTokens(res.token)
+      }
     })
-      .then(({data}) => {
-        const {login}=data
-        setAuthTokens(login);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  };
-
-  const errorMessage = mutationError && 'Error en el inicio de sesión';
-
+  }
   return (
     <>
-      <UserForm onSubmit={login} title='Iniciar Sesión' error={errorMessage} disabled={mutationLoading} />
+      <UserForm onSubmit={login} title='Iniciar Sesión' error={errorMessage} disabled={disabled} />
     </>
   );
 };

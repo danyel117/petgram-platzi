@@ -1,34 +1,27 @@
 import { PrismaClient } from '@prisma/client';
-// import Cors from 'cors';
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { verifyToken } from 'middleware/utils';
 const prisma = new PrismaClient();
+const KEY = process.env.JWT_KEY;
 
-// const cors = Cors({
-//   methods: ['GET', 'POST'],
-// });
-
-// // Helper method to wait for a middleware to execute before continuing
-// // And to throw an error when an error happens in a middleware
-// function runMiddleware(req, res, fn) {
-//   return new Promise((resolve, reject) => {
-//     fn(req, res, (result) => {
-//       if (result instanceof Error) {
-//         return reject(result);
-//       }
-
-//       return resolve(result);
-//     });
-//   });
-// }
 
 
 const ApiUser = async (req,res) => {
     if (req.method === 'GET') {
-        await runMiddleware(req, res, cors);
-        const usuarios = await prisma.user.findMany();
+        const token = req.headers.authorization
+        const decode=verifyToken(token);
+        if(!decode){
+            return res.status(401).json({status:"error",error:"No autorizado"})
+        }
+        const usuario = await prisma.user.findUnique({
+            where:{
+                email:decode.email
+            }
+        });
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(usuarios));
+        res.end(JSON.stringify(usuario));
     }
     
     if(req.method==='POST'){
@@ -36,7 +29,6 @@ const ApiUser = async (req,res) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         const hash = await bcrypt.hash(req.body.password, 10);
-        const compare = await bcrypt.compare(req.body.password, hash);
         const createdUser = await prisma.user.create({
             data:{
                 name:req.body.name,
@@ -44,7 +36,24 @@ const ApiUser = async (req,res) => {
                 password:hash
             }
         })
-        res.end(JSON.stringify(createdUser));
+        const payload = {
+            id: createdUser.id,
+            email: createdUser.email,
+        };
+        /* Sign token */
+        jwt.sign(
+            payload,
+            KEY,
+            {
+            expiresIn: 3600, // 1 year in seconds
+            },
+            (err, token) => {
+            /* Send succes with token */
+            return res.status(200).json({
+                token: token,
+            });
+            }
+        );
     }
 }
 

@@ -48,7 +48,7 @@ function MyApp({ Component, pageProps }) {
   })
   const setTokens=(token)=>{
     setAuthTokens(token)
-    localStorage.setItem("token",token)
+    localStorage.setItem("token",JSON.stringify(token))
   }
   return (
     <>

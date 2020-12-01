@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -33,11 +33,9 @@ model Post{
   userId Int
 }
 
-model Like{
-  id Int @default(autoincrement()) @id
-  user User @relation(fields: [userId],references:[id])
-  userId Int
-  post Post @relation(fields: [postId],references:[id])
-  postId Int
-  date DateTime @default(now())
-}
+// model Like{
+//   id Int @default(autoincrement()) @id
+//   user User @relation(fields: [userId],references:[id])
+//   userId Int
+//   date DateTime @default(now())
+// }
