@@ -8,7 +8,7 @@ const makeGet = (url, options = {}) => {
 };
 
 export const getCategorias = () => {
-  let url = 'https://petgram-server-24iykciv5.now.sh/categories';
+  let url = 'http://localhost:3000/api/categories';
   const headers = '';
   return makeGet(url, { headers });
 };

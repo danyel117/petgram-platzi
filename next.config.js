@@ -25,4 +25,4 @@ const nextConfig = withPWA({
   },
 });
 
-module.exports = withOffline(nextConfig)
+// module.exports = withOffline(nextConfig)
