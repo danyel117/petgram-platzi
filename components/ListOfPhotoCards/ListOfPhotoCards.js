@@ -5,17 +5,17 @@ const ListOfPhotoCards = ({ categoryID }) => {
   const [photos,setPhotos] = useState([])
   const [likes,setLikes] = useState([])
   const [user,setUser] = useState([])
-  useEffect(()=>{
-    const fetchPosts = async ()=>{
-      await getPosts().then(res=>{
-        console.log(res)
-        setLikes(res.likes)
-        setPhotos(res.posts)
-        setUser(res.usuario)
-      })
-    }
-    fetchPosts()
-  },[])
+  useEffect(() => {
+    const fetchPosts = async () => {
+      await getPosts(categoryID).then((res) => {
+        console.log(res);
+        setLikes(res.likes);
+        setPhotos(res.posts);
+        setUser(res.usuario);
+      });
+    };
+    fetchPosts();
+  }, [categoryID]);
   return (
     <ul>
       {photos &&

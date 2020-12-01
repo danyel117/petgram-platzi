@@ -7,6 +7,7 @@ const useCategoriesData = () => {
   useEffect(() => {
     setLoading(true);
     getCategorias().then((res) => {
+      console.log("categorias",res)
       setCategories(res);
       setLoading(false);
     });

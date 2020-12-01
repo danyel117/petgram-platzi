@@ -5,7 +5,7 @@ var urlBase = '';
 if (dev === 'produccion') {
   urlBase = 'https://2ymyjlo1vf.execute-api.us-east-1.amazonaws.com/dev';
 } else if (dev === 'test') {
-  urlBase = 'https://petgram-platzi.danyel117.vercel.app';
+  urlBase = 'https://petgram-platzi.danyel117.vercel.app/api';
 } else if (dev === 'local') {
   urlBase = 'http://localhost:3000/api';
 }
@@ -47,7 +47,7 @@ export const fetchToken = (data) => {
 };
 
 export const getCategorias = () => {
-  let url = urlBase + '/categories';
+  let url = urlBase + '/categories/';
   const headers = '';
   return makeGet(url, { headers });
 };
@@ -66,8 +66,15 @@ export const toggleLike = (data) => {
   return makeJSONPost(url, data, { headers });
 };
 
-export const getPosts = () => {
-  const url = urlBase + '/posts/';
+export const getPosts = (categoryId=null) => {
+  let url=""
+  if (categoryId){
+  url = urlBase + `/posts/${categoryId}`;
+  }
+  else{
+
+    url = urlBase + '/posts/';
+  }
   const token = JSON.parse(localStorage.getItem('token'));
   const headers = getHeaders(token);
   return makeGet(url, { headers });
