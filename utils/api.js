@@ -1,11 +1,11 @@
 
-var dev = 'local'; //local, test, produccion
+var dev = 'test'; //local, test, produccion
 
 var urlBase = '';
 if (dev === 'produccion') {
   urlBase = 'https://2ymyjlo1vf.execute-api.us-east-1.amazonaws.com/dev';
 } else if (dev === 'test') {
-  urlBase = 'https://an9b79z7o7.execute-api.us-east-1.amazonaws.com/tst';
+  urlBase = 'https://petgram-platzi.danyel117.vercel.app/';
 } else if (dev === 'local') {
   urlBase = 'http://localhost:3000/api';
 }
