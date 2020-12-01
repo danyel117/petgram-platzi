@@ -35,7 +35,6 @@ const Posts = async (req,res) =>{
             email: decode.email,
           },
         });
-        console.log(posts,likes);
         return res.status(200).json({posts,likes,usuario});
     }
 

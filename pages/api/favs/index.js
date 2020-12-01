@@ -43,7 +43,6 @@ const Favs = async (req,res) =>{
             },
           },
         });
-        console.log(likes.map((e) => e.id),favs);
         return res.status(200).json({ favs });
     }
 }

@@ -24,7 +24,6 @@ const Auth = async (req,res) => {
             /* Send error with message */
             return res.status(400).json({ status: 'error', error: 'Usuario no encontrado' });
         }
-        console.log(user)
         await bcrypt.compare(password,user.password).then((isMatch)=>{
             if (isMatch) {
             /* Create JWT Payload */

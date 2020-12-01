@@ -9,7 +9,6 @@ const User = () => {
     useEffect(() => {
       const fetchUser = async () => {
         await getUser().then((res) => {
-          console.log(res);
           setUserData(res)
         }).catch(e=>{
           console.error(e);

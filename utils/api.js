@@ -1,4 +1,3 @@
-
 var dev = 'test'; //local, test, produccion
 
 var urlBase = '';
