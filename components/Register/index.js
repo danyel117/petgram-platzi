@@ -1,39 +1,22 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { useAuth } from 'context/auth';
 import UserForm from 'components/UserForm'
-import { useMutation } from '@apollo/react-hooks';
-import {gql} from 'apollo-boost'
-
-const REGISTER = gql`
-  mutation signup($input: UserCredentials!) {
-    signup(input: $input)
-  }
-`;
+import {createUser} from 'utils/api'
 
 const Register = () => {
     const { setAuthTokens } = useAuth();
-    const [mutation, {loading: mutationLoading, error: mutationError }] = useMutation(REGISTER);
-    const register = (email,password)=>{
-      mutation({
-        variables: {
-          input: { email: email.value, password: password.value },
-        },
+    const [errorMessage,setErrorMessage] = useState('')
+    const [loading,setLoading] = useState(false)
+    const register = async (email,password,nombre)=>{
+      setLoading(true)
+      await createUser({name:nombre.value,email:email.value,password:password.value}).then(res=>{
+        setLoading(false)
+        setAuthTokens(res.token)
       })
-        .then(({ data }) => {
-          const { signup } = data;
-          console.log(signup);
-          setAuthTokens(signup)
-        })
-        .catch((e) => {
-          console.error(e);
-        });
     }
-
-    const errorMessage=mutationError && "Error en el registro" 
-
     return (
       <>
-      <UserForm onSubmit={register} title="Registrarse" error={errorMessage} disabled={mutationLoading}/>
+        <UserForm onSubmit={register} title="Registrarse" error={errorMessage} disabled={loading}/>
       </>
     );
 }

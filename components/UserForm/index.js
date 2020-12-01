@@ -5,15 +5,22 @@ import SubmitButton from '@components/SubmitButton'
 const UserForm = ({onSubmit, title, error, disabled}) => {
   const email = useInputValue('');
   const password = useInputValue('');
+  const nombre = useInputValue('');
   const handleSubmit = (e)=>{
     e.preventDefault()
-    onSubmit(email,password)
+    if(title==="Registrarse"){
+      onSubmit(email,password,nombre)
+    }
+    else{
+      onSubmit(email,password)
+    }
   }
   return (
     <>
       <Title>{title}</Title>
       <Form disabled={disabled} onSubmit={handleSubmit}>
-        <Input disabled={disabled} autoComplete='off' placeholder='Email' required {...email} />
+        {title==="Registrarse" && <Input disabled={disabled} autoComplete='off' placeholder='Nombre' required {...nombre} />}
+        <Input disabled={disabled} autoComplete='off' placeholder='Email' type='email' required {...email} />
         <Input disabled={disabled} autoComplete='off' placeholder='Password' type='password' required {...password} />
         <SubmitButton disabled={disabled} title={title}/>
       </Form>
