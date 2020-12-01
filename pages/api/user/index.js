@@ -1,9 +1,22 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { verifyToken } from 'middleware/utils';
+
+const SECRET_KEY = process.env.JWT_KEY;
+
+/*
+ * @params {jwtToken} extracted from cookies
+ * @return {object} object of extracted token
+ */
+function verifyToken(jwtToken) {
+  try {
+    return jwt.verify(jwtToken.split(' ')[1], SECRET_KEY);
+  } catch (e) {
+    return null;
+  }
+}
+
 const prisma = new PrismaClient();
-const KEY = process.env.JWT_KEY;
 
 
 
@@ -43,7 +56,7 @@ const ApiUser = async (req,res) => {
         /* Sign token */
         jwt.sign(
             payload,
-            KEY,
+            SECRET_KEY,
             {
             expiresIn: 3600, // 1 year in seconds
             },
