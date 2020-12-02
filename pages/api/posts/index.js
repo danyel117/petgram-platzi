@@ -27,13 +27,12 @@ const Posts = async (req,res) =>{
           return res.status(401).json({ status: 'error', error: 'No autorizado' });
         }
         const posts = await prisma.post.findMany();
-        // const likes = await prisma.like.findMany();
+        const likes = await prisma.like.findMany();
         // const usuario = await prisma.user.findUnique({
         //   where: {
         //     email: decode.email,
         //   },
         // });
-        const likes=""
         const usuario=""
         return res.status(200).json({posts,likes,usuario});
     }
