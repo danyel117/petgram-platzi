@@ -11,7 +11,7 @@ const ListOfFavs = () => {
         const fetchFavs = async ()=>{
             await getFavs().then(res=>{
                 console.log(res);
-                setFavs(res.favs)
+                setFavs(res.usuario.Favs)
             })
         }
         fetchFavs()
@@ -23,9 +23,9 @@ const ListOfFavs = () => {
                 {
                 favs && favs.map((fav)=>{
                     return (
-                        <Link key={fav.id} href={`/detail/${fav.id}`}>
+                        <Link key={fav.id} href={`/detail/${fav.post.id}`}>
                             <A>
-                                <Image src={fav.src}/>
+                                <Image src={fav.post.src}/>
                             </A>
                         </Link>
                     );
