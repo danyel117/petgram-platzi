@@ -1,4 +1,4 @@
-var dev = 'local'; //local, test, produccion
+var dev = 'test'; //local, test, produccion
 
 var urlBase = '';
 if (dev === 'produccion') {
