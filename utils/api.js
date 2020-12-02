@@ -1,4 +1,4 @@
-var dev = 'local'; //local, test, produccion
+var dev = 'test'; //local, test, produccion
 
 var urlBase = '';
 if (dev === 'produccion') {
@@ -43,6 +43,13 @@ export const fetchToken = (data) => {
   let url = urlBase + '/auth/';
   const headers = { Accept: 'application/json' };
   return makeJSONPost(url, data, { headers });
+};
+
+export const refreshToken = () => {
+  let url = urlBase + '/token_refresh/';
+  const token = JSON.parse(localStorage.getItem('token'));
+  const headers = getHeaders(token);
+  return makeJSONPost(url, {}, { headers });
 };
 
 export const getCategorias = () => {

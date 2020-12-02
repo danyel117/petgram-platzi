@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PrivateRoute from '@components/PrivateRoute'
 import ListOfFavs from '@components/ListOfFavs'
 
-const Favoritos = () => {
+const Favs = () => {
 
     return (
         <PrivateRoute>
@@ -11,4 +11,4 @@ const Favoritos = () => {
     );
 }
  
-export default Favoritos;
+export default Favs;

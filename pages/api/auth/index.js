@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 
 const prisma = new PrismaClient();
-const KEY = process.env.JWT_KEY;
+const SECRET_KEY = process.env.JWT_KEY;
 
 const Auth = async (req,res) => {
     if(req.method==='POST'){
@@ -33,17 +33,17 @@ const Auth = async (req,res) => {
             };
             /* Sign token */
             jwt.sign(
-                payload,
-                KEY,
-                {
-                expiresIn: '1h'
-                },
-                (err, token) => {
+              payload,
+              SECRET_KEY,
+              {
+                expiresIn: '1h',
+              },
+              (err, token) => {
                 /* Send succes with token */
                 return res.status(200).json({
-                    token: token,
+                  token: token,
                 });
-                }
+              }
             );
             } else {
             /* Send error with message */
