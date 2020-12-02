@@ -32,16 +32,17 @@ const Posts = async (req, res) => {
         where:
             {
                 categoryId:parseInt(type)
+            },
+        include:{
+          Favs:{
+            include:{
+              user:true
             }
+          }
+        }
         }
     );
-    const likes = await prisma.like.findMany();
-    const usuario = await prisma.user.findUnique({
-      where: {
-        email: decode.email,
-      },
-    });
-    return res.status(200).json({ posts, likes, usuario });
+    return res.status(200).json({ posts });
   }
 };
 

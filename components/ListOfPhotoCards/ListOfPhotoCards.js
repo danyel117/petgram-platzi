@@ -3,24 +3,30 @@ import PhotoCard from '@components/PhotoCard/PhotoCard';
 import {getPosts} from 'utils/api'
 const ListOfPhotoCards = ({ categoryID }) => {
   const [photos,setPhotos] = useState([])
-  const [likes,setLikes] = useState([])
-  const [user,setUser] = useState([])
+  const [liked,setLiked] = useState([])
+  const [fetch,setFetch] = useState(false)
+
+  useEffect(()=>{
+    setFetch(true)
+  },[categoryID])
   useEffect(() => {
     const fetchPosts = async () => {
       await getPosts(categoryID).then((res) => {
-        console.log(res);
-        setLikes(res.likes);
-        setPhotos(res.posts);
-        setUser(res.usuario);
+        console.log(res)
+        setLiked(res.liked)
+        setPhotos(res.posts)
+        setFetch(false)
       });
     };
-    fetchPosts();
-  }, [categoryID]);
+    if(fetch){
+      fetchPosts();
+    }
+  }, [fetch]);
   return (
     <ul>
-      {photos &&
+      {photos && liked &&
         photos.map((photo) => {
-          return <PhotoCard key={photo.id} setLikes={setLikes} likes={likes.filter(el=>el.postId===photo.id).length} liked={likes.filter(el=>(el.userId===user.id && el.postId===photo.id)).length>0} {...photo} />;
+          return <PhotoCard key={photo.id} likeCount={photo.Favs.length} setFetch={setFetch} liked={liked.filter(lk=>lk.id===photo.id)[0].liked} {...photo} />;
         })}
     </ul>
   );

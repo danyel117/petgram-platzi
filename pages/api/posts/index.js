@@ -26,15 +26,17 @@ const Posts = async (req,res) =>{
         if (!decode) {
           return res.status(401).json({ status: 'error', error: 'No autorizado' });
         }
-        const posts = await prisma.post.findMany();
-        const likes = await prisma.like.findMany();
-        // const usuario = await prisma.user.findUnique({
-        //   where: {
-        //     email: decode.email,
-        //   },
-        // });
-        const usuario=""
-        return res.status(200).json({posts,likes,usuario});
+        const posts = await prisma.post.findMany({
+          include:{
+            Favs:{
+              include:{
+                user:true
+              }
+            }
+          }
+        });
+        const liked = posts.map(pst=>({id:pst.id,liked:pst.Favs.filter(fv=>fv.user.id===decode.id).length>0}))
+        return res.status(200).json({posts,liked});
     }
 
 }

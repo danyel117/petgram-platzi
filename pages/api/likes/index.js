@@ -31,15 +31,16 @@ const ToggleLike = async (req,res) =>{
                 where: {
                 email: decode.email,
                 },
-            });
-            const likes= await prisma.like.findMany({
-                where:{
-                    user:usuario,
-                    postId:parseInt(post)
+                include:{
+                  Favs:{
+                    where:{
+                      postId:parseInt(post)
+                    }
+                  }
                 }
-            })
-            if(likes.length===0){
-                await prisma.like.create({
+            });
+            if(usuario.Favs.length===0){
+                await prisma.favs.create({
                   data: {
                     user: {
                       connect: { id: usuario.id },
@@ -51,13 +52,13 @@ const ToggleLike = async (req,res) =>{
                 });
             }
             else{
-                await prisma.like.delete({
+                await prisma.favs.delete({
                     where:{
-                        id:likes[0].id
+                        id:usuario.Favs[0].id
                     }
                 })
             }
-            const likesU = await prisma.like.findMany()
+            const likesU = await prisma.favs.findMany()
             return res.status(200).json(likesU);
     }
 }

@@ -30,20 +30,15 @@ const Favs = async (req,res) =>{
             where: {
             email: decode.email,
             },
-        });
-        const likes = await prisma.like.findMany({
-            where:{
-                userId:usuario.id
+            include:{
+              Favs:{
+                include:{
+                  post:true
+                }
+              },
             }
-        })
-        const favs = await prisma.post.findMany({
-          where: {
-            id: {
-              in: likes.map((e) => e.postId),
-            },
-          },
         });
-        return res.status(200).json({ favs });
+        return res.status(200).json({ usuario });
     }
 }
 
