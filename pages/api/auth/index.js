@@ -1,12 +1,22 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import Cors from 'cors';
+import initMiddleware from 'lib/init-middleware';
 
+const cors = initMiddleware(
+  // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+  Cors({
+    // Only allow requests with GET, POST and OPTIONS
+    methods: ['GET', 'POST', 'OPTIONS'],
+  })
+);
 
 const prisma = new PrismaClient();
 const SECRET_KEY = process.env.JWT_KEY;
 
 const Auth = async (req,res) => {
+    await cors(req, res);
     if(req.method==='POST'){
         const { email, password } = req.body;
         if (!email || !password) {
