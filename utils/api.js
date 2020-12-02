@@ -4,7 +4,7 @@ var urlBase = '';
 if (dev === 'produccion') {
   urlBase = 'https://2ymyjlo1vf.execute-api.us-east-1.amazonaws.com/dev';
 } else if (dev === 'test') {
-  urlBase = 'petgram-platzi-phi.vercel.app/api';
+  urlBase = 'https://petgram-platzi.danyel117.vercel.app/api';
 } else if (dev === 'local') {
   urlBase = 'http://localhost:3000/api';
 }
