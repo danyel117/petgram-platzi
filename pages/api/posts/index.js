@@ -1,4 +1,5 @@
 import {PrismaClient} from '@prisma/client'
+const prisma = new PrismaClient()
 
 import jwt from 'jsonwebtoken';
 
@@ -16,9 +17,6 @@ function verifyToken(jwtToken) {
   }
 }
 
-const prisma = new PrismaClient()
-
-
 const Posts = async (req,res) =>{
 
     if (req.method === 'GET') {
@@ -29,12 +27,14 @@ const Posts = async (req,res) =>{
           return res.status(401).json({ status: 'error', error: 'No autorizado' });
         }
         const posts = await prisma.post.findMany();
-        const likes = await prisma.like.findMany();
-        const usuario = await prisma.user.findUnique({
-          where: {
-            email: decode.email,
-          },
-        });
+        // const likes = await prisma.like.findMany();
+        // const usuario = await prisma.user.findUnique({
+        //   where: {
+        //     email: decode.email,
+        //   },
+        // });
+        const likes=""
+        const usuario=""
         return res.status(200).json({posts,likes,usuario});
     }
 
