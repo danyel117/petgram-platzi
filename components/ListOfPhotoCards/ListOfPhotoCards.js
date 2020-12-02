@@ -26,7 +26,7 @@ const ListOfPhotoCards = ({ categoryID }) => {
     <ul>
       {photos && liked &&
         photos.map((photo) => {
-          return <PhotoCard key={photo.id} likeCount={photo.Favs.length} setFetch={setFetch} liked={liked.filter(lk=>lk.id===photo.id)[0].liked} {...photo} />;
+          return <PhotoCard key={photo.id} likeCount={photo.Favs.length} setFetch={setFetch} liked={liked.filter(lk=>lk.id===photo.id)[0]} {...photo} />;
         })}
     </ul>
   );

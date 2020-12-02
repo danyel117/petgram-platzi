@@ -26,7 +26,7 @@ const PhotoCard = ({ id, liked,setFetch, likeCount, setLikes, src = DEFAULT_IMAG
               <ImgWrapper>{loading ? <p>Loading...</p> : <Img src={src} />}</ImgWrapper>
             </a>
           </Link>
-          {showButton && <FavButton likes={likeCount} liked={liked} onClick={handleLike} />}
+          {showButton && <FavButton likes={likeCount} liked={liked && liked.liked} onClick={handleLike} />}
         </>
       )}
     </Article>

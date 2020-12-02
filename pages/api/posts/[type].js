@@ -29,20 +29,19 @@ const Posts = async (req, res) => {
       return res.status(401).json({ status: 'error', error: 'No autorizado' });
     }
     const posts = await prisma.post.findMany({
-        where:
-            {
-                categoryId:parseInt(type)
-            },
-        include:{
-          Favs:{
-            include:{
-              user:true
-            }
-          }
-        }
-        }
-    );
-    return res.status(200).json({ posts });
+      where: {
+        categoryId: parseInt(type),
+      },
+      include: {
+        Favs: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    });
+    const liked = posts.map((pst) => ({ id: pst.id, liked: pst.Favs.filter((fv) => fv.user.id === decode.id).length > 0 }));
+    return res.status(200).json({ posts, liked });
   }
 };
 
