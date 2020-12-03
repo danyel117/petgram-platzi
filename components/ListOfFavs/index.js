@@ -10,8 +10,8 @@ const ListOfFavs = () => {
     useEffect(()=>{
         const fetchFavs = async ()=>{
             await getFavs().then(res=>{
-                console.log(res);
-                setFavs(res.usuario.Favs)
+                console.log("favs",res);
+                setFavs(res)
             })
         }
         fetchFavs()
@@ -23,9 +23,9 @@ const ListOfFavs = () => {
                 {
                 favs && favs.map((fav)=>{
                     return (
-                        <Link key={fav.id} href={`/detail/${fav.post.id}`}>
+                        <Link key={fav.id} href={`/detail/${fav.publicacion.id}`}>
                             <A>
-                                <Image src={fav.post.src}/>
+                                <Image src={fav.publicacion.foto}/>
                             </A>
                         </Link>
                     );

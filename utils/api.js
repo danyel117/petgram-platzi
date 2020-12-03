@@ -46,11 +46,16 @@ export const fetchToken = (data) => {
   return makeJSONPost(url, data, { headers });
 };
 
-export const refreshToken = () => {
-  let url = urlBase + '/token_refresh/';
-  const token = JSON.parse(localStorage.getItem('token'));
-  const headers = getHeaders(token);
-  return makeJSONPost(url, {}, { headers });
+export const refreshToken = (data) => {
+  let url = urlBase + '/api-token-refresh/';
+  const body = { token: data };
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(body), // data can be `string` or {object}!
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 };
 
 export const getCategorias = () => {
@@ -81,14 +86,14 @@ export const toggleLike = (data) => {
 };
 
 export const getPhoto = (id) => {
-  let url = urlBase + `/photos/${id}`;
+  let url = urlBase + `/Publicaciones/?photo=${id}`;
   const token = JSON.parse(localStorage.getItem('token'));
   const headers = getHeaders(token);
   return makeGet(url, { headers });
 };
 
 export const getFavs = () => {
-  let url = urlBase + '/favs/';
+  let url = urlBase + '/Likes/';
   const token = JSON.parse(localStorage.getItem('token'));
   const headers = getHeaders(token);
   return makeGet(url, { headers });
@@ -97,7 +102,7 @@ export const getFavs = () => {
 export const getPosts = (categoryId=null) => {
   let url=""
   if (categoryId){
-  url = urlBase + `/posts/${categoryId}`;
+  url = urlBase + `/Publicaciones/?cat=${categoryId}`;
   }
   else{
 

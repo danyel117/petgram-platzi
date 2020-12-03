@@ -23,15 +23,30 @@ function MyApp({ Component, pageProps }) {
   useEffect(()=>{
     
     const refresh = async ()=>{
-      refreshToken().then((res) => {
-        console.log("Token refrescado",res);
-        setTokens(res.token)
+      refreshToken(JSON.parse(localStorage.getItem('token'))).then((res) => {
+        if (res.status===200){
+          return res.json()
+        }
+        else{
+          return null
+        }
+      }).then(res=>{
+        if(res){
+
+          setTokens(res.token)
+        }
+        else{
+          setTokens(null)
+        }
       });
     }
-
-    if (localStorage.getItem('token')){
-      console.log("refresh");
-      // refresh()
+    try{
+      if (localStorage.getItem('token')){
+        refresh()
+      }
+    }
+    catch{
+      setTokens(null);
     }
 
   },[])
