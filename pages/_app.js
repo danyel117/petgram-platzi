@@ -30,7 +30,8 @@ function MyApp({ Component, pageProps }) {
     }
 
     if (localStorage.getItem('token')){
-      refresh()
+      console.log("refresh");
+      // refresh()
     }
 
   },[])

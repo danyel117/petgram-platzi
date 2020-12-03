@@ -41,7 +41,7 @@ const ListOfCategoriesComponent = () => {
             {categories.map((category, index) => {
               return (
                 <Item key={index}>
-                  <Category {...category} />
+                  <Category cover={category.foto} {...category} />
                 </Item>
               );
             })}

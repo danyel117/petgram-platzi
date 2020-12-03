@@ -8,7 +8,7 @@ const Login = () => {
   const [errorMessage,setErrorMessage] = useState("")
   const disabled=false
   const login = async(email,password)=>{
-    const data = { email: email.value, password: password.value };
+    const data = { username: email.value, password: password.value };
     await fetchToken(data).then(res=>{
       console.log(res,res.status);
       if(res.status==="error"){

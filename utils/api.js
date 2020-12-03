@@ -1,4 +1,4 @@
-var dev = 'test'; //local, test, produccion
+var dev = 'local'; //local, test, produccion
 
 var urlBase = '';
 if (dev === 'produccion') {
@@ -6,7 +6,7 @@ if (dev === 'produccion') {
 } else if (dev === 'test') {
   urlBase = 'https://petgram-platzi.danyel117.vercel.app/api';
 } else if (dev === 'local') {
-  urlBase = 'http://localhost:3000/api';
+  urlBase = 'http://127.0.0.1:8000';
 }
 
 const getHeaders = (token) => {
@@ -40,8 +40,9 @@ const makeJSONPost = (url, data, options = {}) => {
 };
 
 export const fetchToken = (data) => {
-  let url = urlBase + '/auth/';
+  let url = urlBase + '/token-auth/';
   const headers = { Accept: 'application/json' };
+  console.log(url);
   return makeJSONPost(url, data, { headers });
 };
 
@@ -53,8 +54,9 @@ export const refreshToken = () => {
 };
 
 export const getCategorias = () => {
-  let url = urlBase + '/categories/';
-  const headers = '';
+  let url = urlBase + '/Categorias/';
+  const token = JSON.parse(localStorage.getItem('token'));
+  const headers = getHeaders(token);
   return makeGet(url, { headers });
 };
 
@@ -99,7 +101,7 @@ export const getPosts = (categoryId=null) => {
   }
   else{
 
-    url = urlBase + '/posts/';
+    url = urlBase + '/Publicaciones/';
   }
   const token = JSON.parse(localStorage.getItem('token'));
   const headers = getHeaders(token);

@@ -4,9 +4,9 @@ import ListOfPhotoCards from '@components/ListOfPhotoCards/ListOfPhotoCards';
 import PrivateRoute from '@components/PrivateRoute'
 const Home  = () =>{
   return (
-        <PrivateRoute>
-          <ListOfCategories />
-          <ListOfPhotoCards />
+      <PrivateRoute>
+        <ListOfCategories />
+        <ListOfPhotoCards />
         </PrivateRoute>
   );
 }

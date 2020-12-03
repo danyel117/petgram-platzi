@@ -20,7 +20,7 @@ const UserForm = ({onSubmit, title, error, disabled}) => {
       <Title>{title}</Title>
       <Form disabled={disabled} onSubmit={handleSubmit}>
         {title==="Registrarse" && <Input disabled={disabled} autoComplete='off' placeholder='Nombre' required {...nombre} />}
-        <Input disabled={disabled} autoComplete='off' placeholder='Email' type='email' required {...email} />
+        <Input disabled={disabled} autoComplete='off' placeholder='Email' required {...email} />
         <Input disabled={disabled} autoComplete='off' placeholder='Password' type='password' required {...password} />
         <SubmitButton disabled={disabled} title={title}/>
       </Form>
