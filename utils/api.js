@@ -1,10 +1,10 @@
-var dev = 'local'; //local, test, produccion
+var dev = 'test'; //local, test, produccion
 
 var urlBase = '';
 if (dev === 'produccion') {
   urlBase = 'https://2ymyjlo1vf.execute-api.us-east-1.amazonaws.com/dev';
 } else if (dev === 'test') {
-  urlBase = 'https://petgram-platzi.danyel117.vercel.app/api';
+  urlBase = 'https://9mhef3f2mj.execute-api.us-east-1.amazonaws.com/dev';
 } else if (dev === 'local') {
   urlBase = 'http://127.0.0.1:8000';
 }
@@ -74,12 +74,12 @@ export const getUser = () => {
 
 export const createUser = (data) => {
   let url = urlBase + '/user/';
-  const headers=''
+  const headers = '';
   return makeJSONPost(url, data, { headers });
 };
 
 export const toggleLike = (data) => {
-  let url = urlBase + '/likes/';
+  let url = urlBase + '/Likes/';
   const token = JSON.parse(localStorage.getItem('token'));
   const headers = getHeaders(token);
   return makeJSONPost(url, data, { headers });
@@ -99,13 +99,11 @@ export const getFavs = () => {
   return makeGet(url, { headers });
 };
 
-export const getPosts = (categoryId=null) => {
-  let url=""
-  if (categoryId){
-  url = urlBase + `/Publicaciones/?cat=${categoryId}`;
-  }
-  else{
-
+export const getPosts = (categoryId = null) => {
+  let url = '';
+  if (categoryId) {
+    url = urlBase + `/Publicaciones/?cat=${categoryId}`;
+  } else {
     url = urlBase + '/Publicaciones/';
   }
   const token = JSON.parse(localStorage.getItem('token'));
